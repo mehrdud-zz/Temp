@@ -1,0 +1,597 @@
+swagger: "2.0"
+info:
+  description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
+  version: "1.0.0"
+  title: "Multi Asset Core"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "petstore.swagger.io"
+basePath: "/v2"
+tags:
+- name: "Portfolio"
+  description: "Everything about portfolios"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+- name: "Strategy"
+  description: "Everything about strategies"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"    
+- name: "Asset"
+  description: "Everything about assets"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"        
+- name: "Security"
+  description: "Everything about securities"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"        
+- name: "PortfolioStrategyAssetSecurityMapping"
+  description: "Everything about portfolio-strategy-asset-securities mapping"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"            
+schemes:
+- "https"
+paths:
+  /Portfolio:
+    get:
+      tags:
+      - "Portfolio"
+      summary: "Get a list of portfolios"
+      description: "Get a list of portfolios"
+      operationId: "getPortfolios"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Portfolio"
+        400:
+          description: "Invalid username supplied"
+        404:
+          description: "User not found"
+    post:
+      tags:
+      - "Portfolio"
+      summary: "Create a new portfolios"
+      description: "Create a new portfolios"
+      operationId: "postPortfolio"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Portfolio object that needs to be added to the database"
+        required: true
+        schema:
+          $ref: "#/definitions/Portfolio"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Portfolio"
+        405:
+          description: "Invalid input"
+    put:
+      tags:
+      - "Portfolio"
+      summary: "Update an existing portfolio"
+      description: ""
+      operationId: "updatePortfolio"
+      consumes:
+      - "application/json" 
+      produces: 
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Portfolio object that needs to be updated to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/Portfolio"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Portfolio not found"
+        405:
+          description: "Validation exception"
+    delete:
+      tags:
+      - "Portfolio"
+      summary: "Deletes a portfolio"
+      description: ""
+      operationId: "deletePortfolio"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "api_key"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "PortfolioId"
+        in: "path"
+        description: "PortfolioId to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Portfolio not found"
+
+  /Strategy:
+    get:
+      tags:
+      - "Strategy"
+      summary: "Get a list of strategys"
+      description: "Get a list of strategys"
+      operationId: "getStrategys"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Strategy"
+        400:
+          description: "Invalid username supplied"
+        404:
+          description: "User not found"
+    post:
+      tags:
+      - "Strategy"
+      summary: "Create a new strategys"
+      description: "Create a new strategys"
+      operationId: "postStrategy"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Strategy object that needs to be added to the database"
+        required: true
+        schema:
+          $ref: "#/definitions/Strategy"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Strategy"
+        405:
+          description: "Invalid input"
+    put:
+      tags:
+      - "Strategy"
+      summary: "Update an existing strategy"
+      description: ""
+      operationId: "updateStrategy"
+      consumes:
+      - "application/json" 
+      produces: 
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Strategy object that needs to be updated to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/Strategy"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Strategy not found"
+        405:
+          description: "Validation exception"
+    delete:
+      tags:
+      - "Strategy"
+      summary: "Deletes a strategy"
+      description: ""
+      operationId: "deleteStrategy"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "api_key"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "StrategyId"
+        in: "path"
+        description: "StrategyId to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Strategy not found"
+          
+  /Asset:
+    get:
+      tags:
+      - "Asset"
+      summary: "Get a list of assets"
+      description: "Get a list of assets"
+      operationId: "getAssets"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Asset"
+        400:
+          description: "Invalid username supplied"
+        404:
+          description: "User not found"
+    post:
+      tags:
+      - "Asset"
+      summary: "Create a new assets"
+      description: "Create a new assets"
+      operationId: "postAsset"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Asset object that needs to be added to the database"
+        required: true
+        schema:
+          $ref: "#/definitions/Asset"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Asset"
+        405:
+          description: "Invalid input"
+    put:
+      tags:
+      - "Asset"
+      summary: "Update an existing asset"
+      description: ""
+      operationId: "updateAsset"
+      consumes:
+      - "application/json" 
+      produces: 
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Asset object that needs to be updated to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/Asset"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Asset not found"
+        405:
+          description: "Validation exception"
+    delete:
+      tags:
+      - "Asset"
+      summary: "Deletes a asset"
+      description: ""
+      operationId: "deleteAsset"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "api_key"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "AssetId"
+        in: "path"
+        description: "AssetId to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Asset not found"          
+  /Security:
+    get:
+      tags:
+      - "Security"
+      summary: "Get a list of securities"
+      description: "Get a list of securities"
+      operationId: "getSecurities"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Security"
+        400:
+          description: "Invalid username supplied"
+        404:
+          description: "User not found"
+    post:
+      tags:
+      - "Security"
+      summary: "Create a new securities"
+      description: "Create a new securities"
+      operationId: "postSecurity"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Security object that needs to be added to the database"
+        required: true
+        schema:
+          $ref: "#/definitions/Security"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Security"
+        405:
+          description: "Invalid input"
+    put:
+      tags:
+      - "Security"
+      summary: "Update an existing security"
+      description: ""
+      operationId: "updateSecurity"
+      consumes:
+      - "application/json" 
+      produces: 
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Security object that needs to be updated to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/Security"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Security not found"
+        405:
+          description: "Validation exception"
+    delete:
+      tags:
+      - "Security"
+      summary: "Deletes a security"
+      description: ""
+      operationId: "deleteSecurity"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "api_key"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "SecurityId"
+        in: "path"
+        description: "SecurityId to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Security not found"
+          
+  /PortfolioStrategyAssetSecurityMapping:
+    get:
+      tags:
+      - "PortfolioStrategyAssetSecurityMapping"
+      summary: "Get the mapping between any portfolio, any strategy, any asset and a number of securities"
+      description: ""
+      operationId: "getPortfolioStrategyAssetSecurityMappings"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - name: "PortfolioId"
+          in: "query"
+          description: "PortfolioId"
+          required: false
+          type: "integer"
+          format: "int64"
+        - name: "StrategyId"
+          in: "query"
+          description: "StrategyId"
+          required: false
+          type: "integer"
+          format: "int64"   
+        - name: "AssetId"
+          in: "query"
+          description: "AssetId"
+          required: false
+          type: "integer"
+          format: "int64"                    
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/PortfolioStrategyAssetSecurityMapping"
+        400:
+          description: "Invalid username supplied"
+        404:
+          description: "User not found"          
+    post:
+      tags:
+      - "PortfolioStrategyAssetSecurityMapping"
+      summary: "Create a new mapping between a portfolio, a strategy, an asset and a number of securities"
+      description: ""
+      operationId: "postPortfolioStrategyAssetSecurityMapping"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "PortfolioStrategyAssetSecurityMapping object that needs to be added to the database"
+        required: true
+        schema:
+          $ref: "#/definitions/PortfolioStrategyAssetSecurityMapping"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/PortfolioStrategyAssetSecurityMapping"
+        405:
+          description: "Invalid input"    
+    delete:
+      tags:
+      - "PortfolioStrategyAssetSecurityMapping"
+      summary: "Delete an existing mapping between a portfolio, a strategy, an asset and a number of securities"
+      description: ""
+      operationId: "deletePortfolioStrategyAssetSecurityMapping"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "api_key"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "PortfolioStrategyAssetSecurityMappingId"
+        in: "path"
+        description: "PortfolioStrategyAssetSecurityMappingId to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "PortfolioStrategyAssetSecurityMapping not found"
+ 
+definitions:
+  Portfolio:
+    type: "object"
+    required: 
+      - PortfolioId
+      - GroupCode
+    properties:
+      PortfolioId:
+        type: "integer"
+        format: "int64"
+        example: "1"
+      Name: 
+        type: "string"
+        example: "Portfolio 1"
+      GroupCode: 
+        type: "string"
+        example: "GB93479"
+      Currency:
+        type: "string"
+        example: "GBP"
+      ModelId:
+        type: "integer"
+        format: "int64"
+        example: "0"
+  Strategy:
+    type: "object"
+    required:
+      - StrategyId
+      - Name
+    properties:
+      StrategyId:
+        type: "integer"
+        format: "int64"
+        example: "1"
+      Name:
+        type: "string"
+        example: "US Credit Premium"
+      StrategyClassificationId:
+        type: "integer"
+        format: "int64"
+        example: "0"
+  Asset:
+    type: "object"
+    description: "Definition comes from: ['AAS Asset Enrichment Status Report - Pre remediation analysis.xlsm'](http://collaboration.london.schroders.com/product-investment/udt-resources/Documents/Temporary%20Share/Aladdin%20UDT%20Remediation/ASALV20/AAS%20Asset%20Enrichment%20Status%20Report%20-%20Pre%20remediation%20analysis.xlsm)"
+    properties:
+      AssedId:
+        type: "integer"
+        format: "int64"
+        example: "0"
+      PortfolioGroupCode: 
+        type: "string"
+        example: "PorfolioGroupCode"
+      Date:
+        type: "string"
+        format: "date-time"
+        example: "09/11/2015  16:21:55"
+      Meta:
+        type: "string"
+        example: "Meta"
+      Ticker:
+        type: "string"
+        example: "SNP"
+      Weight:
+        type: "integer"
+        format: "int64"
+        example: "0.85"
+  Security:
+    type: "object"
+    properties:
+      SecurityId:
+        type: "integer"
+        format: "int64"
+        example: "1"
+      Tag:
+        type: "string"
+        example: "BTF88W9"
+  PortfolioStrategyAssetSecurityMapping:
+    type: "object"
+    required:
+      - Portfolio
+      - Strtegy
+      - Asset
+    properties:
+      Portfolio: 
+        $ref: "#/definitions/Portfolio"
+      Strtegy: 
+        $ref: "#/definitions/Strategy"
+      Asset: 
+        $ref: "#/definitions/Asset"
+      Securities: 
+        type: "array"
+        items:
+          $ref: "#/definitions/Security"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
